@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* Core HTML & Body Styling for Full Control */
+html, body {
+  /* Remove any default margin/padding browsers might apply */
+  margin: 0;
+  padding: 0;
+  /* Ensure they take full viewport dimensions */
+  width: 100%;
+  height: 100%;
+  /* Crucial: Prevent any horizontal overflow on the entire page */
+  overflow-x: hidden;
+  /* Make sure box-sizing is consistent */
+  box-sizing: border-box;
+}
+
+#root { /* The main div where your React app mounts */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Allows Header, Main, Footer to stack vertically */
+  min-height: 100vh; /* Ensures it's at least full viewport height */
+  overflow-x: hidden; /* Another layer of protection */
+}
+
+/* Custom Tailwind Colors (from your tailwind.config.js) */
+.text-primary { color: #6a0572; }
+.bg-primary { background-color: #6a0572; }
+.hover\:bg-purple-800:hover { background-color: #4b034f; }
+.border-primary { border-color: #6a0572; }
+.bg-secondary { background-color: #f0f0f0; } /* Tailwind colors are utility classes */
+.bg-dark { background-color: #222; }
+.text-light { color: #f8f8f8; }
+.bg-light { background-color: #f8f8f8; }
+
+/*
+   *** Aggressive Overrides for react-responsive-carousel ***
+   These are designed to force the carousel and its internal components
+   to respect the 100% width and prevent horizontal overflow.
+*/
+
+/* Target the absolute outermost wrapper */
+.carousel-root {
+    width: 100vw !important; /* Force to viewport width */
+    height: 100vh !important; /* Force to viewport height */
+    overflow: hidden !important; /* Ensure nothing escapes */
+    margin: 0 !important; /* Remove any default margins */
+    padding: 0 !important; /* Remove any default paddings */
+}
+
+/* Target the slider wrapper and the slider itself */
+.carousel .carousel-slider,
+.carousel .slider-wrapper {
+    width: 100% !important; /* Ensure it takes 100% of its parent's width */
+    height: 100% !important; /* Ensure it takes 100% of its parent's height */
+    overflow: hidden !important; /* Crucial to prevent horizontal scroll */
+    margin: 0 !important;
+    padding: 0 !important;
+    /* This next line can sometimes be key if the transform is causing issues */
+    transform: none !important; /* Disables any default carousel transform that might exceed bounds */
+}
+
+/* Target individual slides */
+.carousel .slide {
+    width: 100% !important; /* Ensure individual slides are 100% width */
+    height: 100% !important; /* Ensure individual slides are 100% height */
+    min-width: 100% !important; /* Double-check to prevent shrinking */
+    box-sizing: border-box !important; /* Include padding/border in element's total width */
+    display: flex; /* Helps content centering inside slide */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Each slide should also hide its own overflow */
+}
+
+/* Ensure images within slides cover the area */
+.carousel .slide img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* Ensures image covers area without distorting */
+    display: block; /* Remove any extra space below image */
+}
+
+/* Adjust carousel arrows to ensure they are within bounds and look good */
+.carousel .control-arrow {
+    padding: 0 20px; /* Adjust padding if needed */
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    z-index: 2; /* Ensure above overlay */
+}
+
+.carousel .control-arrow:hover {
+    opacity: 1;
+}
+
+/* Adjust indicator position if they are too close to bottom or off */
+.carousel .control-dots {
+    margin-bottom: 20px !important; /* Adjust as needed */
+    z-index: 2; /* Ensure dots are above overlay */
+    padding: 0 10px; /* Prevent dots from causing overflow on very narrow screens */
+    width: 100%; /* Make sure the dots container is also full width */
+    box-sizing: border-box;
+}
+
+/* Hide indicators on smaller screens if they clutter the view */
+@media (max-width: 768px) {
+  .carousel .control-dots {
+    display: none !important;
+  }
+
+  /* Adjust arrow size/position for mobile if they are too big/intrusive */
+  .carousel .control-arrow {
+      font-size: 1.5em !important;
+      padding: 0 10px;
+  }
+  nav{
+    display: flex;
+    justify-content: space-between;
+  }
+  footer > div{
+    display: flex;
+    flex-direction: column;
+    column-gap: 10 !important;
+  }
+}
+
+/* General body font and color */
+body {
+  font-family: 'Playfair Display', serif; /* Example */
+  color: #333;
+}
+
+/* Ensure main content area also doesn't cause horizontal scroll */
+main {
+    overflow-x: hidden;
+    width: 100%;
+}
